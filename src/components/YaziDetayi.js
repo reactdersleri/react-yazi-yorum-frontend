@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { api } from "../api";
 import YaziYorumlari from "./YaziYorumlari";
 
 const YaziDetayi = (props) => {
@@ -9,11 +10,8 @@ const YaziDetayi = (props) => {
 
   const handleCommentSubmit = (event, yorum) => {
     event.preventDefault();
-    axios
-      .post(
-        `https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`,
-        yorum
-      )
+    api()
+      .post(`/posts/${id}/comments`, yorum)
       .then((response) => {
         setYorumlar([...yorumlar, response.data]);
       })
@@ -24,12 +22,7 @@ const YaziDetayi = (props) => {
 
   useEffect(() => {
     axios
-      .all([
-        axios.get(`https://react-yazi-yorum.herokuapp.com/posts/${id}`),
-        axios.get(
-          `https://react-yazi-yorum.herokuapp.com/posts/${id}/comments`
-        ),
-      ])
+      .all([api().get(`/posts/${id}`), api().get(`/posts/${id}/comments`)])
       .then((responses) => {
         setYaziDetayi(responses[0].data);
         setYorumlar(responses[1].data);
