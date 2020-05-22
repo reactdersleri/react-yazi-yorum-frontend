@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { api } from "../api";
 import { withRouter } from "react-router-dom";
 
 const YaziFormu = (props) => {
-  const [yazi, setYazi] = useState({ title: "", content: "" });
+  const [yazi, setYazi] = useState({
+    title: "",
+    content: "",
+  });
   const [hata, setHata] = useState("");
 
   const onInputChange = (event) =>
@@ -12,15 +15,32 @@ const YaziFormu = (props) => {
   const onFormSubmit = (event) => {
     event.preventDefault();
     setHata("");
-    api()
-      .post("/posts", yazi)
-      .then((response) => {
-        props.history.push("/");
-      })
-      .catch((error) => {
-        setHata("Başlık ve yazı içeriği alanları zorunludur.");
-      });
+
+    if (props.yazi.title) {
+      api()
+        .put(`/posts/${props.match.params.id}`, yazi)
+        .then((response) => {
+          console.log(response);
+          props.history.push(`/posts/${props.match.params.id}`);
+        })
+        .catch((error) => {
+          setHata("Başlık ve yazı içeriği alanları zorunludur.");
+        });
+    } else {
+      api()
+        .post("/posts", yazi)
+        .then((response) => {
+          props.history.push("/");
+        })
+        .catch((error) => {
+          setHata("Başlık ve yazı içeriği alanları zorunludur.");
+        });
+    }
   };
+
+  useEffect(() => {
+    if (props.yazi.title && props.yazi.content) setYazi(props.yazi);
+  }, [props.yazi]);
 
   return (
     <React.Fragment>
