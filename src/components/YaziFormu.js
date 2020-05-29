@@ -39,7 +39,7 @@ const YaziFormu = (props) => {
   };
 
   useEffect(() => {
-    if (props.yazi.title && props.yazi.content) setYazi(props.yazi);
+    if (props.yazi?.title && props.yazi?.content) setYazi(props.yazi);
   }, [props.yazi]);
 
   return (
