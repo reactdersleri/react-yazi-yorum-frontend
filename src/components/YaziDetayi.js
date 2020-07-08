@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { api } from "../api";
 import YaziYorumlari from "./YaziYorumlari";
-import { Link } from "react-router-dom";
+import { Link, useParams, useHistory, useLocation } from "react-router-dom";
 import SilModal from "./SilModal";
 
-const YaziDetayi = (props) => {
-  const { id } = props.match.params;
+const YaziDetayi = () => {
+  const { id } = useParams();
   const [yaziDetayi, setYaziDetayi] = useState({});
   const [yorumlar, setYorumlar] = useState([]);
+
+  const history = useHistory();
+
+  const location = useLocation();
+  console.log({ location });
 
   const handleCommentSubmit = (event, yorum) => {
     event.preventDefault();
@@ -42,7 +47,7 @@ const YaziDetayi = (props) => {
         <Link className="ui blue button" to={`/posts/${yaziDetayi.id}/edit`}>
           Düzenle
         </Link>
-        <SilModal yazi={yaziDetayi} push={props.history.push} />
+        <SilModal yazi={yaziDetayi} push={history.push} />
       </div>
       <p>{yaziDetayi.content}</p>
       <YaziYorumlari yorumlar={yorumlar} handleSubmit={handleCommentSubmit} />
