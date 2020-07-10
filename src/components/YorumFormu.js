@@ -7,7 +7,6 @@ const YORUM_BASLANGIC = {
 
 const YorumFormu = (props) => {
   const [yorum, setYorum] = useState(YORUM_BASLANGIC);
-  //   setYorum(YORUM_BASLANGIC);
 
   const handleOnChange = (event) => {
     setYorum({ ...yorum, [event.target.name]: event.target.value });
