@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 const YaziListesi = (props) => {
   const [yaziListesi, setYaziListesi] = useState([]);
 
+  console.log({ yaziListesi });
+
   useEffect(() => {
     api()
       .get("/posts")
