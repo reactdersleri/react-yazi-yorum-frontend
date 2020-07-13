@@ -6,14 +6,12 @@ import { Link, useParams, useHistory, useLocation } from "react-router-dom";
 import SilModal from "./SilModal";
 
 const YaziDetayi = () => {
-  const { id } = useParams();
   const [yaziDetayi, setYaziDetayi] = useState({});
   const [yorumlar, setYorumlar] = useState([]);
 
+  const { id } = useParams();
   const history = useHistory();
-
   const location = useLocation();
-  console.log({ location });
 
   const handleCommentSubmit = (event, yorum) => {
     event.preventDefault();
